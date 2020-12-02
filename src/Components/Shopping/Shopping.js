@@ -1,4 +1,5 @@
 import React from "react";
+import "./Shopping.sass";
 import product1 from "../../images/product-1.png";
 import product2 from "../../images/product-2.png";
 import remove from "../../images/remove.png";
