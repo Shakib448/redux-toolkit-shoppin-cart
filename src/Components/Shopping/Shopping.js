@@ -2,11 +2,22 @@ import React from "react";
 import "./Shopping.sass";
 import remove from "../../images/remove.png";
 import { useDispatch, useSelector } from "react-redux";
-import { productList } from "../../redux/slices/cartSlice";
+import {
+  addCount,
+  productList,
+  removeCount,
+} from "../../redux/slices/cartSlice";
 
 const Shopping = () => {
   const dispatch = useDispatch();
-  const { product } = useSelector(productList);
+  const { product, count } = useSelector(productList);
+
+  const addQuantity = () => {
+    dispatch(addCount());
+  };
+  const removeQuantity = () => {
+    if (count > 1) dispatch(removeCount());
+  };
 
   return (
     <section>
@@ -23,16 +34,23 @@ const Shopping = () => {
 
                   <div className="col-md-5 center-item">
                     <div className="input-group number-spinner">
-                      <button className="btn btn-default">
+                      <button
+                        onClick={() => removeQuantity(id)}
+                        className="btn btn-default"
+                      >
                         <i className="fas fa-minus"></i>
                       </button>
                       <input
                         id="phone-count"
                         type="text"
                         className="form-control text-center"
-                        value="1"
+                        value={count}
+                        readOnly
                       />
-                      <button className="btn btn-default">
+                      <button
+                        onClick={() => addQuantity(id)}
+                        className="btn btn-default"
+                      >
                         <i className="fas fa-plus"></i>
                       </button>
                     </div>

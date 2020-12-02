@@ -21,13 +21,19 @@ const cartSlice = createSlice({
       },
     ],
     addCart: [],
+    count: 1,
   },
   reducers: {
-    add: (state, action) => {},
+    addCount: (state, action) => {
+      state.count = state.count + 1;
+    },
+    removeCount: (state) => {
+      state.count = state.count - 1;
+    },
   },
 });
 
-export const { add } = cartSlice.actions;
+export const { addCount, removeCount } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
