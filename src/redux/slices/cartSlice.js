@@ -20,7 +20,7 @@ const cartSlice = createSlice({
         price: 59,
       },
     ],
-    cart: [],
+    addCart: [],
   },
   reducers: {
     add: (state, action) => {},
@@ -30,3 +30,7 @@ const cartSlice = createSlice({
 export const { add } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+// Selector
+
+export const productList = (state) => state.entities.shoppingCart;
