@@ -1,41 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Shopping.sass";
 import remove from "../../images/remove.png";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addCount,
-  productList,
-  removeCount,
-} from "../../redux/slices/cartSlice";
+import { add, productList } from "../../redux/slices/cartSlice";
 
 const Shopping = () => {
-  const dispatch = useDispatch();
-  const { product, count } = useSelector(productList);
+  const [input, setInput] = useState();
 
-  const addQuantity = () => {
-    dispatch(addCount());
+  const onInputChange = (e) => [setInput(e.target.value)];
+
+  const dispatch = useDispatch();
+  const { product, addCart } = useSelector(productList);
+
+  const addProduct = (item) => {
+    dispatch(add(item));
   };
-  const removeQuantity = () => {
-    if (count > 1) dispatch(removeCount());
-  };
+  const removeProduct = () => {};
 
   return (
     <section>
       <div className="container">
         <div className="cart">
           <div className="col-md-12 col-lg-10 mx-auto">
-            {product.map(({ id, name, img, price }) => (
-              <div key={id} className="cart-item">
+            {product.map((pd) => (
+              <div key={pd.id} className="cart-item">
                 <div className="row">
                   <div className="col-md-7 center-item">
-                    <img src={img} alt="" />
-                    <h5>{name}</h5>
+                    <img src={pd.img} alt="" />
+                    <h5>{pd.name}</h5>
                   </div>
 
                   <div className="col-md-5 center-item">
                     <div className="input-group number-spinner">
                       <button
-                        onClick={() => removeQuantity(id)}
+                        onClick={() => removeProduct()}
                         className="btn btn-default"
                       >
                         <i className="fas fa-minus"></i>
@@ -44,18 +42,19 @@ const Shopping = () => {
                         id="phone-count"
                         type="text"
                         className="form-control text-center"
-                        value={count}
-                        readOnly
+                        name="qty"
+                        value={input}
+                        onChange={onInputChange}
                       />
                       <button
-                        onClick={() => addQuantity(id)}
+                        onClick={() => addProduct(pd)}
                         className="btn btn-default"
                       >
                         <i className="fas fa-plus"></i>
                       </button>
                     </div>
                     <h5>
-                      $ <span id="phone-total">{price}</span>
+                      $ <span id="phone-total">{pd.price}</span>
                     </h5>
                     <img src={remove} alt="" className="remove-item" />
                   </div>

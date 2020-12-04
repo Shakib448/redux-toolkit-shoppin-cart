@@ -21,19 +21,20 @@ const cartSlice = createSlice({
       },
     ],
     addCart: [],
-    count: 1,
   },
   reducers: {
-    addCount: (state, action) => {
-      state.count = state.count + 1;
-    },
-    removeCount: (state) => {
-      state.count = state.count - 1;
+    add: (state, action) => {
+      const pdId = state.product.find((pd) => pd.id === action.payload.id);
+      const addCartId = state.addCart.find((pdId) =>
+        pdId.id === action.payload.id ? true : false
+      );
+
+      state.addCart.push(action.payload);
     },
   },
 });
 
-export const { addCount, removeCount } = cartSlice.actions;
+export const { add } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
