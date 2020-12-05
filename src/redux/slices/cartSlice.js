@@ -25,18 +25,14 @@ const cartSlice = createSlice({
   reducers: {
     add: (state, action) => {
       const { payload } = action;
-      const item = state.product.find(
-        (product) => product.id === action.payload.id
-      );
-      const inCart = state.cart.find((item) => item.id === action.payload.id)
-        ? true
-        : false;
+      const inCart = state.cart.find((item) => item.id === action.payload.id);
       if (inCart) {
-        state.cart.map((item) =>
-          item.id === action.payload.id ? { ...payload } : item
+        state.cart.map(
+          (item) =>
+            item.id === action.payload.id && { ...payload, qty: item.qty + 1 }
         );
       } else {
-        state.cart.push(payload);
+        state.cart.push({ ...payload, qty: 1 });
       }
     },
     remove: (state, action) => {
