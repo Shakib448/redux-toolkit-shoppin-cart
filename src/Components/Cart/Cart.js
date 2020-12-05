@@ -8,7 +8,7 @@ import {
 } from "../../redux/slices/cartSlice";
 
 const Cart = ({ item }) => {
-  // const { cart } = useSelector(productList);
+  const { cart } = useSelector(productList);
 
   const [count, setCount] = useState(1);
 
@@ -27,7 +27,7 @@ const Cart = ({ item }) => {
         </div>
 
         <div className="col-md-5 center-item">
-          {/* {!cart.selected ? ( */}
+          {/* {cart.selected ? ( */}
           <button onClick={() => dispatch(add(item))} className="addCart__btn">
             Add Cart
           </button>
