@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import "./Shopping.sass";
 import remove from "../../images/remove.png";
 import { useDispatch, useSelector } from "react-redux";
-import { add, productList } from "../../redux/slices/cartSlice";
+import {
+  add,
+  productList,
+  addItemQuantity,
+} from "../../redux/slices/cartSlice";
 
 const Shopping = () => {
   const [input, setInput] = useState();
+
+  const [count, setCount] = useState(1);
 
   const onInputChange = (e) => [setInput(e.target.value)];
 
@@ -14,6 +20,10 @@ const Shopping = () => {
 
   const addProduct = (item) => {
     dispatch(add(item));
+  };
+
+  const quantityItem = (id, qty) => {
+    dispatch(addItemQuantity(id, qty));
   };
   const removeProduct = () => {};
 
@@ -33,21 +43,22 @@ const Shopping = () => {
                   <div className="col-md-5 center-item">
                     <div className="input-group number-spinner">
                       <button
-                        onClick={() => removeProduct()}
+                        onClick={() => setCount(count - 1)}
                         className="btn btn-default"
+                        disabled={count === 1 && true}
                       >
                         <i className="fas fa-minus"></i>
                       </button>
                       <input
                         id="phone-count"
-                        type="text"
+                        type="type"
                         className="form-control text-center"
                         name="qty"
-                        value={input}
+                        value={count}
                         onChange={onInputChange}
                       />
                       <button
-                        onClick={() => addProduct(pd)}
+                        onClick={() => setCount(count + 1)}
                         className="btn btn-default"
                       >
                         <i className="fas fa-plus"></i>

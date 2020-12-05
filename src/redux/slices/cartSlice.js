@@ -31,10 +31,13 @@ const cartSlice = createSlice({
 
       state.addCart.push(action.payload);
     },
+    addItemQuantity: (state, action) => {
+      console.log(action.payload);
+    },
   },
 });
 
-export const { add } = cartSlice.actions;
+export const { add, addItemQuantity } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
