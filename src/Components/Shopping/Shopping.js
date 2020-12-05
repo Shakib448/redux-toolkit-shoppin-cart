@@ -1,25 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Shopping.sass";
 import remove from "../../images/remove.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
   productList,
   addItemQuantity,
-  addCart,
+  add,
 } from "../../redux/slices/cartSlice";
 
 const Shopping = () => {
+  const { product } = useSelector(productList);
+
   const [count, setCount] = useState(1);
 
   const dispatch = useDispatch();
-  const { product, cart } = useSelector(productList);
 
-  const onInputChange = (e) => [addItemQuantity(product.id, count)];
-
-  const quantityItem = (id, qty) => {
-    dispatch(addItemQuantity(id, count));
-  };
-
+  // useEffect(() => {
+  //   dispatch(addItemQuantity({ qty: count }));
+  // }, [count]);
   return (
     <section>
       <div className="container">
@@ -34,38 +32,29 @@ const Shopping = () => {
                   </div>
 
                   <div className="col-md-5 center-item">
-                    {cart.length === 0 ? (
+                    <div className="input-group number-spinner">
                       <button
-                        onClick={() => dispatch(addCart(pd))}
-                        className="addCart__btn"
+                        onClick={() => setCount(count - 1)}
+                        className="btn btn-default"
+                        disabled={count === 1 && true}
                       >
-                        Add Cart
+                        <i className="fas fa-minus"></i>
                       </button>
-                    ) : (
-                      <div className="input-group number-spinner">
-                        <button
-                          onClick={() => setCount(count - 1)}
-                          className="btn btn-default"
-                          disabled={count === 1 && true}
-                        >
-                          <i className="fas fa-minus"></i>
-                        </button>
-                        <input
-                          id="phone-count"
-                          type="type"
-                          className="form-control text-center"
-                          name="qty"
-                          value={count}
-                          onChange={quantityItem}
-                        />
-                        <button
-                          onClick={() => setCount(count + 1)}
-                          className="btn btn-default"
-                        >
-                          <i className="fas fa-plus"></i>
-                        </button>
-                      </div>
-                    )}
+                      <input
+                        id="phone-count"
+                        type="number"
+                        className="form-control text-center"
+                        name="qty"
+                        value={count}
+                        readOnly
+                      />
+                      <button
+                        onClick={() => dispatch(add(pd))}
+                        className="btn btn-default"
+                      >
+                        <i className="fas fa-plus"></i>
+                      </button>
+                    </div>
 
                     <h5>
                       $ <span id="phone-total">{pd.price}</span>
