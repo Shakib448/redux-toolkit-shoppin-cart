@@ -3,29 +3,22 @@ import "./Shopping.sass";
 import remove from "../../images/remove.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  add,
   productList,
   addItemQuantity,
+  addCart,
 } from "../../redux/slices/cartSlice";
 
 const Shopping = () => {
-  const [input, setInput] = useState();
-
   const [count, setCount] = useState(1);
 
-  const onInputChange = (e) => [setInput(e.target.value)];
-
   const dispatch = useDispatch();
-  const { product, addCart } = useSelector(productList);
+  const { product, cart } = useSelector(productList);
 
-  const addProduct = (item) => {
-    dispatch(add(item));
-  };
+  const onInputChange = (e) => [addItemQuantity(product.id, count)];
 
   const quantityItem = (id, qty) => {
-    dispatch(addItemQuantity(id, qty));
+    dispatch(addItemQuantity(id, count));
   };
-  const removeProduct = () => {};
 
   return (
     <section>
@@ -41,29 +34,39 @@ const Shopping = () => {
                   </div>
 
                   <div className="col-md-5 center-item">
-                    <div className="input-group number-spinner">
+                    {cart.length === 0 ? (
                       <button
-                        onClick={() => setCount(count - 1)}
-                        className="btn btn-default"
-                        disabled={count === 1 && true}
+                        onClick={() => dispatch(addCart(pd))}
+                        className="addCart__btn"
                       >
-                        <i className="fas fa-minus"></i>
+                        Add Cart
                       </button>
-                      <input
-                        id="phone-count"
-                        type="type"
-                        className="form-control text-center"
-                        name="qty"
-                        value={count}
-                        onChange={onInputChange}
-                      />
-                      <button
-                        onClick={() => setCount(count + 1)}
-                        className="btn btn-default"
-                      >
-                        <i className="fas fa-plus"></i>
-                      </button>
-                    </div>
+                    ) : (
+                      <div className="input-group number-spinner">
+                        <button
+                          onClick={() => setCount(count - 1)}
+                          className="btn btn-default"
+                          disabled={count === 1 && true}
+                        >
+                          <i className="fas fa-minus"></i>
+                        </button>
+                        <input
+                          id="phone-count"
+                          type="type"
+                          className="form-control text-center"
+                          name="qty"
+                          value={count}
+                          onChange={quantityItem}
+                        />
+                        <button
+                          onClick={() => setCount(count + 1)}
+                          className="btn btn-default"
+                        >
+                          <i className="fas fa-plus"></i>
+                        </button>
+                      </div>
+                    )}
+
                     <h5>
                       $ <span id="phone-total">{pd.price}</span>
                     </h5>

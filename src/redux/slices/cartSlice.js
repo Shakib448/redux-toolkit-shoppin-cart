@@ -20,24 +20,17 @@ const cartSlice = createSlice({
         price: 59,
       },
     ],
-    addCart: [],
+    cart: [],
   },
   reducers: {
-    add: (state, action) => {
-      const pdId = state.product.find((pd) => pd.id === action.payload.id);
-      const addCartId = state.addCart.find((pdId) =>
-        pdId.id === action.payload.id ? true : false
-      );
-
-      state.addCart.push(action.payload);
-    },
-    addItemQuantity: (state, action) => {
+    addCart: (state, action) => {
       console.log(action.payload);
+      state.cart.push(action.payload);
     },
   },
 });
 
-export const { add, addItemQuantity } = cartSlice.actions;
+export const { addItemQuantity, addCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
