@@ -33,7 +33,7 @@ const cartSlice = createSlice({
         state.cart.map((item) =>
           item.id === action.payload.id ? { ...item, qty: item.qty + 1 } : item
         );
-      } else if (!inCart) {
+      } else {
         state.cart.push({ ...payload, qty: 1 });
       }
     },
@@ -41,7 +41,6 @@ const cartSlice = createSlice({
       delete state.cart[action.payload.id];
     },
     addItemQuantity: (state, action) => {
-      console.log(action.payload);
       state.cart.map((item) =>
         item.id === action.payload.id
           ? {
@@ -51,7 +50,6 @@ const cartSlice = createSlice({
           : item
       );
     },
-    loadCurrentItem: (state, action) => {},
   },
 });
 
