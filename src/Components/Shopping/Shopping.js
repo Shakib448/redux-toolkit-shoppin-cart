@@ -1,68 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
+import { productList } from "../../redux/slices/cartSlice";
+import Cart from "../Cart/Cart";
 import "./Shopping.sass";
-import remove from "../../images/remove.png";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  productList,
-  addItemQuantity,
-  add,
-} from "../../redux/slices/cartSlice";
 
 const Shopping = () => {
   const { product } = useSelector(productList);
 
-  const [count, setCount] = useState(1);
-
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(addItemQuantity({ qty: count }));
-  // }, [count]);
   return (
     <section>
       <div className="container">
         <div className="cart">
           <div className="col-md-12 col-lg-10 mx-auto">
-            {product.map((pd) => (
-              <div key={pd.id} className="cart-item">
-                <div className="row">
-                  <div className="col-md-7 center-item">
-                    <img src={pd.img} alt="" />
-                    <h5>{pd.name}</h5>
-                  </div>
-
-                  <div className="col-md-5 center-item">
-                    <div className="input-group number-spinner">
-                      <button
-                        onClick={() => setCount(count - 1)}
-                        className="btn btn-default"
-                        disabled={count === 1 && true}
-                      >
-                        <i className="fas fa-minus"></i>
-                      </button>
-                      <input
-                        id="phone-count"
-                        type="number"
-                        className="form-control text-center"
-                        name="qty"
-                        value={count}
-                        readOnly
-                      />
-                      <button
-                        onClick={() => dispatch(add(pd))}
-                        className="btn btn-default"
-                      >
-                        <i className="fas fa-plus"></i>
-                      </button>
-                    </div>
-
-                    <h5>
-                      $ <span id="phone-total">{pd.price}</span>
-                    </h5>
-                    <img src={remove} alt="" className="remove-item" />
-                  </div>
-                </div>
-              </div>
+            {product.map((item) => (
+              <Cart key={item.id} item={item} />
             ))}
             <div className="cart-item">
               <div className="row">

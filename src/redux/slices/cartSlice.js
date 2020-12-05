@@ -25,26 +25,31 @@ const cartSlice = createSlice({
   reducers: {
     add: (state, action) => {
       const { payload } = action;
-      const inCart = state.cart.find((item) => item.id === action.payload.id);
+      const inCart = state.cart.find((item) => item.id === action.payload.id)
+        ? true
+        : false;
+
       if (inCart) {
-        state.cart.map(
-          (item) =>
-            item.id === action.payload.id && { ...payload, qty: item.qty + 1 }
+        state.cart.map((item) =>
+          item.id === action.payload.id ? { ...item, qty: item.qty + 1 } : item
         );
-      } else {
+      } else if (!inCart) {
         state.cart.push({ ...payload, qty: 1 });
       }
     },
     remove: (state, action) => {
-      return state.map((item) => {
-        if (item.id !== action.payload.id) {
-          return item;
-        }
-        return {
-          ...item,
-          added: false,
-        };
-      });
+      delete state.cart[action.payload.id];
+    },
+    addItemQuantity: (state, action) => {
+      console.log(action.payload);
+      state.cart.map((item) =>
+        item.id === action.payload.id
+          ? {
+              ...item,
+              qty: action.payload.qty,
+            }
+          : item
+      );
     },
   },
 });
