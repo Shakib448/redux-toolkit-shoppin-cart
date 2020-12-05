@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import product1 from "../../images/product-1.png";
 import product2 from "../../images/product-2.png";
 
+let count = 1;
+
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
@@ -24,17 +26,19 @@ const cartSlice = createSlice({
   },
   reducers: {
     add: (state, action) => {
-      const { payload } = action;
-      const inCart = state.cart.find((item) => item.id === action.payload.id)
-        ? true
-        : false;
+      const { id, img, name, price } = action.payload;
+
+      const inCart = state.cart.find((item) => item.id === action.payload.id);
 
       if (inCart) {
-        state.cart.map((item) =>
-          item.id === action.payload.id ? { ...item, qty: item.qty + 1 } : item
+        const index = state.cart.findIndex(
+          (item) => item.id === action.payload.id
         );
+
+        state.cart[index].selected = true;
+        state.cart[index].qty = count++;
       } else {
-        state.cart.push({ ...payload, qty: 1 });
+        state.cart.push({ id, img, name, price, qty: 1, selected: false });
       }
     },
     remove: (state, action) => {
