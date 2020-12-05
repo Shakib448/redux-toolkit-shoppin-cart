@@ -51,6 +51,7 @@ const cartSlice = createSlice({
           : item
       );
     },
+    loadCurrentItem: (state, action) => {},
   },
 });
 
