@@ -3,9 +3,7 @@ import img from "../../images/remove.png";
 import { useDispatch, useSelector } from "react-redux";
 import { quantity, add, productList } from "../../redux/slices/cartSlice";
 
-const Cart = ({ item }) => {
-  const { cart, product } = useSelector(productList);
-
+const Cart = ({ item, totalPrice }) => {
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
 
@@ -51,7 +49,7 @@ const Cart = ({ item }) => {
           </div>
 
           <h5>
-            $ <span id="phone-total">{item.price}</span>
+            $ <span id="phone-total">{totalPrice}</span>
           </h5>
           <img src={img} alt="" className="remove-item" />
         </div>

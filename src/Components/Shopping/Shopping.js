@@ -20,7 +20,7 @@ const Shopping = () => {
 
     cart.forEach((item) => {
       items = item.qty;
-      price = item.price;
+      price += item.price;
       tax = (price / 100).toFixed(2);
       total = (price + Number(tax)).toFixed(2);
     });
@@ -47,14 +47,14 @@ const Shopping = () => {
         <div className="cart">
           <div className="col-md-12 col-lg-10 mx-auto">
             {product.map((item) => (
-              <Cart key={item.id} item={item} />
+              <Cart key={item.id} item={item} totalPrice={totalPrice} />
             ))}
             <div className="cart-item">
               <div className="row">
                 <div className="col-md-8">
                   <h5>Subtotal: </h5>
                   <h5>Tax:</h5>
-                  <h5>Total: {totalPrice} </h5>
+                  <h5>Total: {grandTotal} </h5>
                 </div>
 
                 <div className="col-md-4 status">
