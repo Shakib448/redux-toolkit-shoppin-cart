@@ -10,24 +10,30 @@ const Shopping = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [nitTax, setNitTax] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
 
   useEffect(() => {
     let items = 0;
     let price = 0;
     let tax = 0;
+    let total = 0;
 
     cart.forEach((item) => {
       items += item.qty;
       price += item.qty * item.price;
-      tax = (price / 100).toFixed(0);
+      tax = (price / 100).toFixed(2);
+      total = (price + Number(tax)).toFixed(2);
     });
 
     setTotalItems(items);
     setTotalPrice(price);
     setNitTax(tax);
+    setGrandTotal(total);
   }, [
     cart,
     nitTax,
+    setGrandTotal,
+    grandTotal,
     setNitTax,
     totalPrice,
     totalItems,
@@ -54,7 +60,7 @@ const Shopping = () => {
                 <div className="col-md-4 status">
                   <h5 id="total-price">$ {totalPrice} </h5>
                   <h5 id="tax-amount">${nitTax}</h5>
-                  <h5 id="grand-total">$1,278</h5>
+                  <h5 id="grand-total">${grandTotal}</h5>
                 </div>
               </div>
             </div>
