@@ -23,7 +23,10 @@ const Cart = ({ item }) => {
 
         <div className="col-md-5 center-item">
           {/* {!select ? ( */}
-          <button onClick={() => dispatch(add(item))} className="addCart__btn">
+          <button
+            onClick={() => dispatch(add({ ...item, id: item.id }))}
+            className="addCart__btn"
+          >
             {item.price}
           </button>
           {/* ) : ( */}
@@ -31,7 +34,9 @@ const Cart = ({ item }) => {
             <div className="input-group number-spinner">
               <button
                 onClick={() => setCount(count - 1)}
-                className="btn btn-default"
+                className={`${
+                  count === 1 ? "danger btn btn-default" : "btn btn-default"
+                }`}
                 disabled={count === 1 && true}
               >
                 <i className="fas fa-minus"></i>
