@@ -22,48 +22,48 @@ const Cart = ({ item }) => {
         </div>
 
         <div className="col-md-5 center-item">
-          {/* {!select ? ( */}
-          <button
-            onClick={() => dispatch(add({ ...item, id: item.id }))}
-            className="addCart__btn"
-          >
-            {item.price}
-          </button>
-          {/* ) : ( */}
-          <>
-            <div className="input-group number-spinner">
-              <button
-                onClick={() => setCount(count - 1)}
-                className={`${
-                  count === 1 ? "danger btn btn-default" : "btn btn-default"
-                }`}
-                disabled={count === 1 && true}
-              >
-                <i className="fas fa-minus"></i>
-              </button>
-              <input
-                min="1"
-                id="phone-count"
-                type="text"
-                className="form-control text-center"
-                name="qty"
-                value={count}
-                readOnly
-              />
-              <button
-                onClick={() => setCount(count + 1)}
-                className="btn btn-default"
-              >
-                <i className="fas fa-plus"></i>
-              </button>
-            </div>
+          {!cart.find((items) => items.id === item.id) ? (
+            <button
+              onClick={() => dispatch(add({ ...item }))}
+              className="addCart__btn"
+            >
+              {item.price}
+            </button>
+          ) : (
+            <>
+              <div className="input-group number-spinner">
+                <button
+                  onClick={() => setCount(count - 1)}
+                  className={`${
+                    count === 1 ? "danger btn btn-default" : "btn btn-default"
+                  }`}
+                  disabled={count === 1 && true}
+                >
+                  <i className="fas fa-minus"></i>
+                </button>
+                <input
+                  min="1"
+                  id="phone-count"
+                  type="text"
+                  className="form-control text-center"
+                  name="qty"
+                  value={count}
+                  readOnly
+                />
+                <button
+                  onClick={() => setCount(count + 1)}
+                  className="btn btn-default"
+                >
+                  <i className="fas fa-plus"></i>
+                </button>
+              </div>
 
-            <h5>
-              $ <span id="phone-total">{item.price * count}</span>
-            </h5>
-            <img src={img} alt="" className="remove-item" />
-          </>
-          {/* )} */}
+              <h5>
+                $ <span id="phone-total">{item.price * count}</span>
+              </h5>
+              <img src={img} alt="" className="remove-item" />
+            </>
+          )}
         </div>
       </div>
     </div>
