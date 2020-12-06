@@ -47,12 +47,7 @@ const Shopping = () => {
         <div className="cart">
           <div className="col-md-12 col-lg-10 mx-auto">
             {product.map((item) => (
-              <Cart
-                key={item.id}
-                item={item}
-                totalItems={totalItems}
-                totalPrice={totalPrice}
-              />
+              <Cart key={item.id} item={item} />
             ))}
             <div className="cart-item">
               <div className="row">
