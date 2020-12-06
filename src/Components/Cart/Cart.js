@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import img from "../../images/remove.png";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addItemQuantity,
-  add,
-  productList,
-} from "../../redux/slices/cartSlice";
+import { quantity, add, productList } from "../../redux/slices/cartSlice";
 
 const Cart = ({ item }) => {
-  const { cart } = useSelector(productList);
+  const { cart, product } = useSelector(productList);
+
+  const cartId = cart.find((item) => item.id === cart.id);
+  const pdId = product.find((item) => item.id === cart.id);
 
   const [count, setCount] = useState(1);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(addItemQuantity({ id: item.id, qty: count }));
+    dispatch(quantity({ id: item.id, qty: count }));
   }, [dispatch, count, item.id]);
 
   return (
@@ -27,11 +26,9 @@ const Cart = ({ item }) => {
         </div>
 
         <div className="col-md-5 center-item">
-          {/* {cart.selected ? ( */}
           <button onClick={() => dispatch(add(item))} className="addCart__btn">
             Add Cart
           </button>
-          {/* ) : ( */}
           <div className="input-group number-spinner">
             <button
               onClick={() => setCount(count - 1)}
@@ -56,7 +53,6 @@ const Cart = ({ item }) => {
               <i className="fas fa-plus"></i>
             </button>
           </div>
-          {/* )} */}
 
           <h5>
             $ <span id="phone-total">{item.price}</span>
