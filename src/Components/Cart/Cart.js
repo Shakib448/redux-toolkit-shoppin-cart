@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import img from "../../images/remove.png";
 import { useDispatch, useSelector } from "react-redux";
-import { quantity, add, productList } from "../../redux/slices/cartSlice";
+import {
+  quantity,
+  add,
+  productList,
+  remove,
+} from "../../redux/slices/cartSlice";
 
 const Cart = ({ item }) => {
   const [count, setCount] = useState(1);
   const { cart } = useSelector(productList);
 
   const dispatch = useDispatch();
+
+  const findIndex = cart.find((items) => items.id === item.id);
 
   useEffect(() => {
     dispatch(quantity({ id: item.id, qty: count, uPrice: item.price }));
@@ -22,7 +29,7 @@ const Cart = ({ item }) => {
         </div>
 
         <div className="col-md-5 center-item">
-          {!cart.find((items) => items.id === item.id) ? (
+          {!findIndex ? (
             <button
               onClick={() => dispatch(add({ ...item }))}
               className="addCart__btn"
@@ -61,7 +68,13 @@ const Cart = ({ item }) => {
               <h5>
                 $ <span id="phone-total">{item.price * count}</span>
               </h5>
-              <img src={img} alt="" className="remove-item" />
+              <img
+                onClick={() => dispatch(remove(item.id))}
+                style={{ cursor: "pointer" }}
+                src={img}
+                alt=""
+                className="remove-item"
+              />
             </>
           )}
         </div>

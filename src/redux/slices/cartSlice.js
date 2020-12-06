@@ -34,20 +34,14 @@ const cartSlice = createSlice({
         );
         state.cart[qtyInx].qty = action.payload.qty;
       } else {
-        state.cart.push({ id, img, name, price, qty: 1, selected: false });
+        state.cart.push({ id, img, name, price, qty: 1, selected: true });
       }
     },
     remove: (state, action) => {
-      delete state.cart[action.payload.id];
+      delete state.cart.shift(action.payload.id);
     },
     quantity: (state, action) => {
       const inCart = state.cart.find((item) => item.id === action.payload.id);
-      if (inCart) {
-        const qtyInx = state.cart.findIndex(
-          (item) => item.id === action.payload.id
-        );
-        state.cart[qtyInx].selected = false;
-      }
       if (inCart) {
         const qtyInx = state.cart.findIndex(
           (item) => item.id === action.payload.id
