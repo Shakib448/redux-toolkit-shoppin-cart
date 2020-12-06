@@ -6,16 +6,12 @@ import { quantity, add, productList } from "../../redux/slices/cartSlice";
 const Cart = ({ item }) => {
   const { cart, product } = useSelector(productList);
 
-  const cartId = cart.find((item) => item.id === cart.id);
-  const pdId = product.find((item) => item.id === cart.id);
-
   const [count, setCount] = useState(1);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(quantity({ id: item.id, qty: count }));
-  }, [dispatch, count, item.id]);
+    dispatch(quantity({ id: item.id, qty: count, uPrice: item.price }));
+  }, [dispatch, count, item.id, item.price]);
 
   return (
     <div className="cart-item">
@@ -27,7 +23,7 @@ const Cart = ({ item }) => {
 
         <div className="col-md-5 center-item">
           <button onClick={() => dispatch(add(item))} className="addCart__btn">
-            Add Cart
+            {item.price}
           </button>
           <div className="input-group number-spinner">
             <button

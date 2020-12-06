@@ -19,8 +19,8 @@ const Shopping = () => {
     let total = 0;
 
     cart.forEach((item) => {
-      items += item.qty;
-      price += item.qty * item.price;
+      items = item.qty;
+      price = item.price;
       tax = (price / 100).toFixed(2);
       total = (price + Number(tax)).toFixed(2);
     });

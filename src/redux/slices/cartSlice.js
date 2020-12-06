@@ -13,6 +13,7 @@ const cartSlice = createSlice({
         img: product1,
         price: 1219,
       },
+
       {
         id: 2,
         name: "iPhone 11 Silicone Case - Black",
@@ -27,7 +28,12 @@ const cartSlice = createSlice({
       const { id, img, name, price } = action.payload;
 
       const inCart = state.cart.find((item) => item.id === action.payload.id);
-      if (!inCart) {
+      if (inCart) {
+        const qtyInx = state.cart.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        state.cart[qtyInx].qty = action.payload.qty;
+      } else {
         state.cart.push({ id, img, name, price, qty: 1, selected: true });
       }
     },
@@ -41,6 +47,7 @@ const cartSlice = createSlice({
           (item) => item.id === action.payload.id
         );
         state.cart[qtyInx].qty = action.payload.qty;
+        state.cart[qtyInx].price = action.payload.qty * action.payload.uPrice;
       }
     },
   },
