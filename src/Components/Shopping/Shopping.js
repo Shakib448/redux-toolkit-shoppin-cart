@@ -11,6 +11,7 @@ const Shopping = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [nitTax, setNitTax] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
+  const [select, setSelect] = useState(false);
 
   useEffect(() => {
     let items = 0;
@@ -19,6 +20,7 @@ const Shopping = () => {
     let total = 0;
 
     cart.forEach((item) => {
+      setSelect(item.selected);
       items += item.qty;
       price += item.price;
       tax = (price / 100).toFixed(2);
@@ -47,7 +49,7 @@ const Shopping = () => {
         <div className="cart">
           <div className="col-md-12 col-lg-10 mx-auto">
             {product.map((item) => (
-              <Cart key={item.id} item={item} />
+              <Cart key={item.id} item={item} select={select} />
             ))}
             <div className="cart-item">
               <div className="row">

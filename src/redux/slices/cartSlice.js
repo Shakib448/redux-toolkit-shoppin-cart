@@ -33,8 +33,9 @@ const cartSlice = createSlice({
           (item) => item.id === action.payload.id
         );
         state.cart[qtyInx].qty = action.payload.qty;
+        state.cart[qtyInx].selected = true;
       } else {
-        state.cart.push({ id, img, name, price, qty: 1, selected: true });
+        state.cart.push({ id, img, name, price, qty: 1, selected: false });
       }
     },
     remove: (state, action) => {
@@ -42,6 +43,12 @@ const cartSlice = createSlice({
     },
     quantity: (state, action) => {
       const inCart = state.cart.find((item) => item.id === action.payload.id);
+      if (inCart) {
+        const qtyInx = state.cart.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        state.cart[qtyInx].selected = false;
+      }
       if (inCart) {
         const qtyInx = state.cart.findIndex(
           (item) => item.id === action.payload.id

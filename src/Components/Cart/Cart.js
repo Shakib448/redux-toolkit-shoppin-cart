@@ -5,6 +5,8 @@ import { quantity, add, productList } from "../../redux/slices/cartSlice";
 
 const Cart = ({ item }) => {
   const [count, setCount] = useState(1);
+  const { cart } = useSelector(productList);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,38 +22,43 @@ const Cart = ({ item }) => {
         </div>
 
         <div className="col-md-5 center-item">
+          {/* {!select ? ( */}
           <button onClick={() => dispatch(add(item))} className="addCart__btn">
             {item.price}
           </button>
-          <div className="input-group number-spinner">
-            <button
-              onClick={() => setCount(count - 1)}
-              className="btn btn-default"
-              disabled={count === 1 && true}
-            >
-              <i className="fas fa-minus"></i>
-            </button>
-            <input
-              min="1"
-              id="phone-count"
-              type="text"
-              className="form-control text-center"
-              name="qty"
-              value={count}
-              readOnly
-            />
-            <button
-              onClick={() => setCount(count + 1)}
-              className="btn btn-default"
-            >
-              <i className="fas fa-plus"></i>
-            </button>
-          </div>
+          {/* ) : ( */}
+          <>
+            <div className="input-group number-spinner">
+              <button
+                onClick={() => setCount(count - 1)}
+                className="btn btn-default"
+                disabled={count === 1 && true}
+              >
+                <i className="fas fa-minus"></i>
+              </button>
+              <input
+                min="1"
+                id="phone-count"
+                type="text"
+                className="form-control text-center"
+                name="qty"
+                value={count}
+                readOnly
+              />
+              <button
+                onClick={() => setCount(count + 1)}
+                className="btn btn-default"
+              >
+                <i className="fas fa-plus"></i>
+              </button>
+            </div>
 
-          <h5>
-            $ <span id="phone-total">{item.price * count}</span>
-          </h5>
-          <img src={img} alt="" className="remove-item" />
+            <h5>
+              $ <span id="phone-total">{item.price * count}</span>
+            </h5>
+            <img src={img} alt="" className="remove-item" />
+          </>
+          {/* )} */}
         </div>
       </div>
     </div>
