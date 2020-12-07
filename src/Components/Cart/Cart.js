@@ -15,7 +15,6 @@ const Cart = ({ item }) => {
   const dispatch = useDispatch();
 
   const findIndex = cart.find((items) => items.id === item.id);
-  const deleteIndx = cart.find((items) => items.id !== item.id);
 
   useEffect(() => {
     dispatch(quantity({ id: item.id, qty: count, uPrice: item.price }));
@@ -70,7 +69,7 @@ const Cart = ({ item }) => {
                 $ <span id="phone-total">{item.price * count}</span>
               </h5>
               <img
-                onClick={() => dispatch(remove(deleteIndx))}
+                onClick={() => dispatch(remove(item.id))}
                 style={{ cursor: "pointer" }}
                 src={img}
                 alt=""
